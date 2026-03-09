@@ -330,10 +330,11 @@ submitBtn.addEventListener("click", function(e){
     errorMsg.style.color = "green";
     errorMsg.textContent = "Email stored successfully!";
     emailInput.style.border = "2px solid green";
+    emailInput.style.background="white"
 
     setTimeout(function(){
         location.reload();
-    },5000);
+    },15000);
 
 });
 
@@ -378,4 +379,5 @@ emailInput.addEventListener("blur", function(){
 </script>
 
 </html>
+
 
