@@ -264,7 +264,7 @@ autocomplete="off"
 <p id="errorMsg"></p>
 
 <button class="arrow" id="submit">
-<img src="down-arrow.png"
+<img src="images/down-arrow.png"
 alt="Button Image"
 style="width:16px;height:16px;transform:rotate(270deg);">
 </button>
@@ -273,11 +273,11 @@ style="width:16px;height:16px;transform:rotate(270deg);">
 
 
 <div class="avatars">
-<img src="image_1.jpg">
-<img src="image_3.jpg">
-<img src="image_2.jpeg">
-<img src="image_4.jpg">
-<img src="image_5.jpg">
+<img src="images/image_1.jpg">
+<img src="images/image_3.jpg">
+<img src="images/image_2.jpeg">
+<img src="images/image_4.jpg">
+<img src="images/image_5.jpg">
 </div>
 
 </div>
@@ -292,70 +292,88 @@ style="width:16px;height:16px;transform:rotate(270deg);">
 </body>
 
 <script>
-// Input focus
-function getfocus() {
-  document.getElementById("email").focus();
-}
-
-function losefocus() {
-  document.getElementById("email").blur();
-}
-
 // Elements
-let emailInput = document.getElementById("email");
-let submitBtn = document.getElementById("submit");
-let errorMsg = document.getElementById("errorMsg");
+const emailInput = document.getElementById("email");
+const submitBtn = document.getElementById("submit");
+const errorMsg = document.getElementById("errorMsg");
 
-let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Email regex
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// SUBMIT BUTTON VALIDATION
-submitBtn.addEventListener("click", function (e) {
+
+// ----------------------
+// SUBMIT VALIDATION
+// ----------------------
+submitBtn.addEventListener("click", function(e){
 
     e.preventDefault();
 
-    let email = emailInput.value.trim();
+    const email = emailInput.value.trim();
 
-    errorMsg.textContent = "";
-
-    if (email === "") {
+    if(email === ""){
         errorMsg.textContent = "Email field cannot be empty";
         emailInput.style.border = "2px solid #e45153";
         emailInput.focus();
         return;
     }
 
-    if (!emailRegex.test(email)) {
+    if(!emailRegex.test(email)){
         errorMsg.textContent = "Please enter a valid email address";
         emailInput.style.border = "2px solid #e45153";
         emailInput.focus();
         return;
     }
 
-    // Store email
+    // store email
     localStorage.setItem("userEmail", email);
 
     errorMsg.style.color = "green";
     errorMsg.textContent = "Email stored successfully!";
     emailInput.style.border = "2px solid green";
 
-    setTimeout(function () {
+    setTimeout(function(){
         location.reload();
-    }, 5000);
+    },5000);
 
 });
 
 
+// ----------------------
 // REMOVE ERROR WHILE TYPING
-emailInput.addEventListener("input", function () {
+// ----------------------
+emailInput.addEventListener("input", function(){
 
-    let value = emailInput.value.trim();
+    const value = emailInput.value.trim();
 
-    if (value !== "") {
+    if(value !== ""){
         errorMsg.textContent = "";
         emailInput.style.border = "2px solid #3276b4";
     }
 
 });
-</script>
 
+
+// ----------------------
+// VALIDATE ON BLUR
+// ----------------------
+emailInput.addEventListener("blur", function(){
+
+    const email = emailInput.value.trim();
+
+    if(email === ""){
+        errorMsg.textContent = "";
+        emailInput.style.border = "unset";
+        return;
+    }
+
+    if(!emailRegex.test(email)){
+        errorMsg.textContent = "Please enter a valid email address";
+        emailInput.style.border = "unset";
+    }else{
+        errorMsg.textContent = "";
+        emailInput.style.border = "unset";
+    }
+
+});
+</script>
 </html>
